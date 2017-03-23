@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<title>BackgroundAction !Soon!</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<style>
+body,h1,h2{font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+p {line-height: 2}
+.bgimg, .bgimg2 {
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+.bgimg {background-image: url("images/Kids.jpg")}
+.bgimg2 {background-image: url("images/Kids.jpg")}
+</style>
+<body>
+
+<!-- Header / Home-->
+<header class="w3-display-container w3-wide bgimg w3-grayscale-min" id="home">
+  <div class="w3-display-middle w3-text-white w3-text-bold w3-center">
+    <h1 class="w3-jumbo">Background Action!</h1>
+    <h2></h2><!-- Kann noch eingefuellt werden -->
+   
+  <h1></h1><!-- kann noch eingefuellt werden -->
+  <p class="w3-xlarge">
+    <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-round w3-white w3-opacity w3-hover-opacity-off" style="padding:8px 60px">Neugierig?</button>
+  </p>
+</div>
+  </div>
+</header>
+
+<!-- RSVP section -->
+
+
+<!-- RSVP modal -->
+<div id="id01" class="w3-modal">
+  <div class="w3-modal-content w3-card-8 w3-animate-zoom w3-padding-jumbo" style="max-width:600px;border-radius:10px">
+    <div class="w3-container w3-white w3-center" >
+      <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn w3-hover-text-gray w3-margin" >x</span>
+      <h1 class="w3-wide"></h1><!-- kann eingefuellt werden -->
+      <p><br>   Danke für das Interesse, wir melden uns mit News.</p>
+     <form onsubmit='return mysubmit()'>
+        <input id='emailinput' class="w3-input w3-border" type="email" placeholder="Email" name="email" required>
+      
+        <p>Ich bin...</p>
+          <div class="w3-row">
+            <div class="w3-half">
+            <button onclick="clicksubscribe('extra')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Statist</button>
+            </div>
+            <div class="w3-half">
+            <button onclick="clicksubscribe('producer')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Produzent</button>
+           </div>
+            <div class="w3-row">
+            <button onclick="clicksubscribe('neugierig')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...einfach neugierig!</button>
+            </div>
+
+          </div>
+        
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<script>
+
+function clicksubscribe(type){
+  var email=document.querySelector('input[name=email]').value
+  var newkey = firebase.database().ref('emails').push()
+  var data = {'email':email, type:type, os:navigator.userAgent}
+  var setres =  newkey.set(data)
+  document.getElementById('id01').style.display='none'
+}
+
+function mysubmit(e){
+ 
+  var email=document.querySelector('input[name=email]').value
+  if(email)
+    clicksubscribe('neugierig')
+   
+  return false
+}
+
+document.querySelector('input[name=email]').addEventListener('keypress', onenterkeypress)
+
+function onenterkeypress(event){
+  if(event.key=='Enter'){
+ //clicksubscribe('neugierig')
+  }
+}
+
+
+</script>
+
+
+
+<script src="https://www.gstatic.com/firebasejs/3.7.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAdBKLU3pJzGh1LOT3iP74VFZal7ZxEyzg",
+    authDomain: "teaser-8a6b7.firebaseapp.com",
+    databaseURL: "https://teaser-8a6b7.firebaseio.com",
+    storageBucket: "teaser-8a6b7.appspot.com",
+    messagingSenderId: "362324108632"
+  };
+  firebase.initializeApp(config);
+</script>
+
