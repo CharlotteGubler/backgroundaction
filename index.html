@@ -45,19 +45,23 @@ p {line-height: 2}
       <span onclick="document.getElementById('id01').style.display='none'" class="w3-closebtn w3-hover-text-gray w3-margin" >x</span>
       <h1 class="w3-wide"></h1><!-- kann eingefuellt werden -->
       <p><br>   Danke für das Interesse, wir melden uns mit News.</p>
-     <form onsubmit='return mysubmit()'>
+     <form onsubmit='return mysubmit(this,event)'>
         <input id='emailinput' class="w3-input w3-border" type="email" placeholder="Email" name="email" required>
       
         <p>Ich bin...</p>
           <div class="w3-row">
             <div class="w3-half">
-            <button onclick="clicksubscribe('extra')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Statist</button>
+
+            <!-- this is the default when you press enter -->
+            <div style="display:none"><button onclick="this.form.submitted='neugierig'" type="submit"></button></div>
+            
+            <button onclick="this.form.submitted='STATIST'" type="submit" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Statist</button>
             </div>
             <div class="w3-half">
-            <button onclick="clicksubscribe('producer')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Produzent</button>
+            <button onclick="this.form.submitted='PRODUZENT'" type="submit" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...ein Produzent</button>
            </div>
             <div class="w3-row">
-            <button onclick="clicksubscribe('neugierig')" type="button" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...einfach neugierig!</button>
+            <button onclick="this.form.submitted='NEUGIERIG'" type="submit" class="w3-button w3-block w3-navy" style="border: #ffffff;border-style:solid;border-width: 1px">...einfach neugierig!</button>
             </div>
 
           </div>
@@ -78,15 +82,17 @@ function clicksubscribe(type){
   var email=document.querySelector('input[name=email]').value
   var newkey = firebase.database().ref('emails').push()
   var data = {'email':email, type:type, os:navigator.userAgent}
+  console.log("subscribe with data",data)
   var setres =  newkey.set(data)
   document.getElementById('id01').style.display='none'
 }
 
-function mysubmit(e){
- 
+function mysubmit(form,event){
+  var type = form.submitted || 'neugierig'
+  form.submitted=null
   var email=document.querySelector('input[name=email]').value
   if(email)
-    clicksubscribe('neugierig')
+    clicksubscribe(type)
    
   return false
 }
